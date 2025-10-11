@@ -1,6 +1,4 @@
-# fyn-1
-
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Start, Hono, ORPC, and more.
+# fyn
 
 ## Features
 
@@ -24,6 +22,7 @@ First, install the dependencies:
 ```bash
 pnpm install
 ```
+
 ## Database Setup
 
 This project uses PostgreSQL with Drizzle ORM.
@@ -32,10 +31,10 @@ This project uses PostgreSQL with Drizzle ORM.
 2. Update your `apps/server/.env` file with your PostgreSQL connection details.
 
 3. Apply the schema to your database:
+
 ```bash
 pnpm db:push
 ```
-
 
 Then, run the development server:
 
@@ -46,16 +45,10 @@ pnpm dev
 Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
 The API is running at [http://localhost:3000](http://localhost:3000).
 
-
-
-
-
-
-
 ## Project Structure
 
-```
-fyn-1/
+```ts
+fyn/
 ├── apps/
 │   ├── web/         # Frontend application (React + TanStack Start)
 │   └── server/      # Backend API (Hono, ORPC)
