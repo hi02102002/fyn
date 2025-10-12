@@ -1,10 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { authClient } from "@/lib/auth-client";
-import { orpc } from "@/utils/orpc";
+import { orpc, queryClient } from "@/utils/orpc";
 
 export const Route = createFileRoute("/dashboard")({
 	component: RouteComponent,
+	loader: async () => {
+		console.log(
+			"Dashboard loaded",
+			typeof window === "undefined" ? "server" : "client",
+		);
+
+		const { time } = await queryClient.ensureQueryData(
+			orpc.serverTime.queryOptions(),
+		);
+
+		console.log("Server time:", time);
+	},
 	beforeLoad: async () => {
 		const session = await authClient.getSession();
 		if (!session.data) {

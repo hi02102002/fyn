@@ -1,4 +1,4 @@
-import { auth } from "@fyn-1/auth";
+import { auth } from "@fyn/auth";
 import type { Context as HonoContext } from "hono";
 
 export type CreateContextOptions = {

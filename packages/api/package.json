@@ -1,12 +1,12 @@
 {
-	"name": "@fyn-1/api",
+	"name": "@fyn/api",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
+			"types": "./src/index.ts",
 			"default": "./src/index.ts"
 		},
 		"./*": {
-			"types": "./dist/*.d.ts",
+			"types": "./src/*.ts",
 			"default": "./src/*.ts"
 		}
 	},
@@ -28,7 +28,7 @@
 		"hono": "catalog:",
 		"dotenv": "catalog:",
 		"zod": "catalog:",
-		"@fyn-1/auth": "workspace:*",
-		"@fyn-1/db": "workspace:*"
+		"@fyn/auth": "workspace:*",
+		"@fyn/db": "workspace:*"
 	}
 }

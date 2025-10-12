@@ -1,5 +1,5 @@
-import { db } from "@fyn-1/db";
-import * as schema from "@fyn-1/db/schema/auth";
+import { db } from "@fyn/db";
+import * as schema from "@fyn/db/schema/auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 

@@ -1,12 +1,11 @@
-import { createContext } from "@fyn-1/api/context";
-import { appRouter } from "@fyn-1/api/routers/index";
+import type { AppRouter } from "@fyn/api/routers/index";
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
 import type { RouterClient } from "@orpc/server";
-import { createRouterClient } from "@orpc/server";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { createIsomorphicFn } from "@tanstack/react-start";
+import { getRequest, getRequestHeaders } from "@tanstack/react-start/server";
 import { toast } from "sonner";
 
 export const queryClient = new QueryClient({
@@ -25,14 +24,22 @@ export const queryClient = new QueryClient({
 });
 
 const getORPCClient = createIsomorphicFn()
-	.server(() =>
-		createRouterClient(appRouter, {
-			context: async ({ req }) => {
-				return createContext({ req });
+	.server((): RouterClient<AppRouter> => {
+		getRequest();
+		const link = new RPCLink({
+			url: `${import.meta.env.VITE_SERVER_URL}/rpc`,
+			fetch(url, options) {
+				return fetch(url, {
+					...options,
+					credentials: "include",
+					headers: getRequestHeaders(),
+				});
 			},
-		}),
-	)
-	.client((): RouterClient<typeof appRouter> => {
+		});
+
+		return createORPCClient(link);
+	})
+	.client((): RouterClient<AppRouter> => {
 		const link = new RPCLink({
 			url: `${import.meta.env.VITE_SERVER_URL}/rpc`,
 			fetch(url, options) {
@@ -46,6 +53,6 @@ const getORPCClient = createIsomorphicFn()
 		return createORPCClient(link);
 	});
 
-export const client: RouterClient<typeof appRouter> = getORPCClient();
+export const client: RouterClient<AppRouter> = getORPCClient();
 
 export const orpc = createTanstackQueryUtils(client);

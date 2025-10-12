@@ -1,7 +1,7 @@
 import "dotenv/config";
-import { createContext } from "@fyn-1/api/context";
-import { appRouter } from "@fyn-1/api/routers/index";
-import { auth } from "@fyn-1/auth";
+import { createContext } from "@fyn/api/context";
+import { appRouter } from "@fyn/api/routers/index";
+import { auth } from "@fyn/auth";
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { onError } from "@orpc/server";

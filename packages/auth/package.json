@@ -1,12 +1,12 @@
 {
-	"name": "@fyn-1/auth",
+	"name": "@fyn/auth",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
+			"types": "./src/index.d.ts",
 			"default": "./src/index.ts"
 		},
 		"./*": {
-			"types": "./dist/*.d.ts",
+			"types": "./src/*.d.ts",
 			"default": "./src/*.ts"
 		}
 	},
@@ -24,6 +24,6 @@
 		"better-auth": "catalog:",
 		"dotenv": "catalog:",
 		"zod": "catalog:",
-		"@fyn-1/db": "workspace:*"
+		"@fyn/db": "workspace:*"
 	}
 }

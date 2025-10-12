@@ -1,5 +1,5 @@
 {
-	"name": "@fyn-1/db",
+	"name": "@fyn/db",
 	"type": "module",
 	"exports": {
 		".": {

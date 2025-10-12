@@ -63,13 +63,13 @@ importers:
 
   apps/server:
     dependencies:
-      '@fyn-1/api':
+      '@fyn/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@fyn-1/auth':
+      '@fyn/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@fyn-1/db':
+      '@fyn/db':
         specifier: workspace:*
         version: link:../../packages/db
       '@hono/node-server':
@@ -112,10 +112,10 @@ importers:
 
   apps/web:
     dependencies:
-      '@fyn-1/api':
+      '@fyn/api':
         specifier: workspace:*
         version: link:../../packages/api
-      '@fyn-1/auth':
+      '@fyn/auth':
         specifier: workspace:*
         version: link:../../packages/auth
       '@orpc/client':
@@ -227,10 +227,10 @@ importers:
 
   packages/api:
     dependencies:
-      '@fyn-1/auth':
+      '@fyn/auth':
         specifier: workspace:*
         version: link:../auth
-      '@fyn-1/db':
+      '@fyn/db':
         specifier: workspace:*
         version: link:../db
       '@orpc/client':
@@ -264,7 +264,7 @@ importers:
 
   packages/auth:
     dependencies:
-      '@fyn-1/db':
+      '@fyn/db':
         specifier: workspace:*
         version: link:../db
       better-auth:

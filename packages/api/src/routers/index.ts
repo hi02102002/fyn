@@ -11,6 +11,11 @@ export const appRouter = {
 			user: context.session?.user,
 		};
 	}),
+	serverTime: publicProcedure.handler(() => {
+		return {
+			time: new Date().toISOString(),
+		};
+	}),
 };
 export type AppRouter = typeof appRouter;
 export type AppRouterClient = RouterClient<typeof appRouter>;
