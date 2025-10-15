@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "vite build",
 		"build-report": "vite build --report",
+		"check-types": "tsc -b",
 		"serve": "vite preview",
 		"dev": "vite dev --port=3001"
 	},
