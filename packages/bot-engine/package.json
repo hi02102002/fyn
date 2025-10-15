@@ -1,0 +1,46 @@
+{
+	"name": "@fyn/flow-engine",
+	"type": "module",
+	"scripts": {
+		"build": "tsdown",
+		"test": "vitest",
+		"test:run": "vitest run",
+		"test:coverage": "vitest run --coverage"
+	},
+	"devDependencies": {
+		"tsdown": "catalog:",
+		"vitest": "^2.1.8",
+		"@vitest/coverage-v8": "^2.1.8",
+		"typescript": "catalog:"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"eventemitter3": "^5.0.1",
+		"ofetch": "^1.4.1",
+		"zod": "catalog:"
+	},
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": "./dist/index.js",
+		"./actions": "./dist/actions/index.js",
+		"./engine": "./dist/engine.js",
+		"./nodes/base-node": "./dist/nodes/base-node.js",
+		"./nodes/collect-node": "./dist/nodes/collect-node.js",
+		"./nodes/condition-node": "./dist/nodes/condition-node.js",
+		"./nodes/http-request-node": "./dist/nodes/http-request-node.js",
+		"./nodes/message-node": "./dist/nodes/message-node.js",
+		"./nodes/router-node": "./dist/nodes/router-node.js",
+		"./nodes/set-var-node": "./dist/nodes/set-var-node.js",
+		"./storage/memory-storage": "./dist/storage/memory-storage.js",
+		"./storage/state-storage": "./dist/storage/state-storage.js",
+		"./types": "./dist/types/index.js",
+		"./utils/engine-state": "./dist/utils/engine-state.js",
+		"./utils/eval-expr": "./dist/utils/eval-expr.js",
+		"./utils/template": "./dist/utils/template.js",
+		"./*": "./*"
+	}
+}

@@ -36,6 +36,51 @@
 		"build-report": {
 			"cache": false,
 			"persistent": true
+		},
+		"test": {
+			"dependsOn": [
+				"^build"
+			],
+			"inputs": [
+				"src/**/*.ts",
+				"src/**/*.js",
+				"**/*.test.ts",
+				"**/*.test.js",
+				"vitest.config.*"
+			],
+			"outputs": [
+				"coverage/**"
+			]
+		},
+		"test:run": {
+			"dependsOn": [
+				"^build"
+			],
+			"inputs": [
+				"src/**/*.ts",
+				"src/**/*.js",
+				"**/*.test.ts",
+				"**/*.test.js",
+				"vitest.config.*"
+			],
+			"outputs": [
+				"coverage/**"
+			]
+		},
+		"test:coverage": {
+			"dependsOn": [
+				"^build"
+			],
+			"inputs": [
+				"src/**/*.ts",
+				"src/**/*.js",
+				"**/*.test.ts",
+				"**/*.test.js",
+				"vitest.config.*"
+			],
+			"outputs": [
+				"coverage/**"
+			]
 		}
 	}
 }
