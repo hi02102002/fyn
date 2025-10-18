@@ -16,15 +16,15 @@ export const sendMagicLinkEmail = async ({
 }) => {
 	const transporter = await getTransporter();
 
-	await transporter
-		.sendMail({
-			from,
-			to,
-			subject: "Your Magic Link",
-			html: `
+	const res = await transporter.sendMail({
+		from,
+		to,
+		subject: "Your Magic Link",
+		html: `
       <p>Click the link below to log in:</p>
       <a href="${url}">${url}</a>
     `,
-		})
-		.catch(void 0);
+	});
+
+	return res;
 };
