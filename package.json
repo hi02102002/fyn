@@ -19,17 +19,23 @@
 		"db:push": "turbo -F @fyn/db db:push",
 		"db:studio": "turbo -F @fyn/db db:studio",
 		"db:generate": "turbo -F @fyn/db db:generate",
-		"db:migrate": "turbo -F @fyn/db db:migrate"
+		"db:migrate": "turbo -F @fyn/db db:migrate",
+		"test": "turbo run test",
+		"test:projects": "vitest run",
+		"test:projects:watch": "vitest --watch",
+		"view-report": "turbo run view-report"
 	},
 	"dependencies": {
 		"dotenv": "^17.2.2",
 		"zod": "^4.1.11"
 	},
 	"devDependencies": {
-		"turbo": "^2.5.4",
 		"@biomejs/biome": "^2.2.0",
+		"@fyn/vitest-config": "workspace:*",
+		"@types/node": "^22.13.11",
 		"tsdown": "^0.15.5",
-		"@types/node": "^22.13.11"
+		"turbo": "^2.5.4",
+		"vitest": "catalog:"
 	},
 	"packageManager": "pnpm@9.15.2"
 }
