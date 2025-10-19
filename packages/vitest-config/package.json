@@ -24,6 +24,8 @@
 		"glob": "^11.0.1",
 		"jsdom": "^26.0.0",
 		"nyc": "^17.1.0",
-		"typescript": "catalog:"
+		"typescript": "catalog:",
+		"@fyn/tsconfig": "workspace:*",
+		"tsdown": "catalog:"
 	}
 }

@@ -22,7 +22,8 @@
 	"devDependencies": {
 		"drizzle-kit": "^0.31.2",
 		"@types/pg": "^8.11.11",
-		"tsdown": "catalog:"
+		"tsdown": "catalog:",
+		"@fyn/tsconfig": "workspace:*"
 	},
 	"peerDependencies": {
 		"typescript": "^5"

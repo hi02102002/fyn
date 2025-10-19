@@ -3,7 +3,7 @@ import * as schema from "@fyn/db/schema/auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
-export const auth = betterAuth({
+const _auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "pg",
 
@@ -21,3 +21,8 @@ export const auth = betterAuth({
 		},
 	},
 });
+
+const handler = _auth.handler;
+const api = _auth.api;
+
+export { handler, api };

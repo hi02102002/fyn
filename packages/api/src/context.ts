@@ -1,4 +1,4 @@
-import { auth } from "@fyn/auth";
+import { api } from "@fyn/auth";
 import type { Context as HonoContext } from "hono";
 
 export type CreateContextOptions = {
@@ -6,9 +6,10 @@ export type CreateContextOptions = {
 };
 
 export async function createContext({ context }: CreateContextOptions) {
-	const session = await auth.api.getSession({
+	const session = await api.getSession({
 		headers: context.req.raw.headers,
 	});
+	
 	return {
 		session,
 	};
