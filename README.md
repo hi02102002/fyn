@@ -17,10 +17,29 @@
 
 ## Getting Started
 
+### Option 1: Local Development
+
 First, install the dependencies:
 
 ```bash
 pnpm install
+```
+
+### Option 2: Docker
+
+For running the application in Docker containers, see [DOCKER.md](./DOCKER.md) for detailed instructions.
+
+Quick start with Docker Compose:
+
+```bash
+# Copy environment files
+cp .env.docker.example .env.docker
+cp apps/server/.env.example apps/server/.env
+cp apps/web/.env.example apps/web/.env
+
+# Edit the .env files with your configuration
+# Then start all services
+docker-compose up --build
 ```
 
 ## Database Setup
@@ -50,12 +69,16 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 ```ts
 fyn/
 ├── apps/
-│   ├── web/         # Frontend application (React + TanStack Start)
-│   └── server/      # Backend API (Hono, ORPC)
+│   ├── web/            # Frontend application (React + TanStack Start)
+│   │   └── Dockerfile  # Docker configuration for web app
+│   └── server/         # Backend API (Hono, ORPC)
+│       └── Dockerfile  # Docker configuration for server
 ├── packages/
-│   ├── api/         # API layer / business logic
-│   ├── auth/        # Authentication configuration & logic
-│   └── db/          # Database schema & queries
+│   ├── api/            # API layer / business logic
+│   ├── auth/           # Authentication configuration & logic
+│   └── db/             # Database schema & queries
+├── docker-compose.yml  # Docker Compose orchestration
+└── DOCKER.md           # Docker setup documentation
 ```
 
 ## Available Scripts
