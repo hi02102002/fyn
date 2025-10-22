@@ -42,6 +42,9 @@ COPY --from=deps /app/ .
 # Copy source code from pruned workspace
 COPY --from=pruner /app/out/full/ .
 
+# Copy root-level TypeScript config files (not included in turbo prune)
+COPY tsconfig.base.json tsconfig.json ./
+
 # Build the web app using Turbo
 RUN pnpm turbo build --filter=web
 
