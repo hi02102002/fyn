@@ -21,7 +21,7 @@ COPY . .
 # Prune the monorepo to only include dependencies for the web app
 RUN turbo prune web --docker
 
-# Dependencies stage
+# Dependencies stage - install all dependencies for building
 FROM base AS deps
 WORKDIR /app
 
@@ -29,7 +29,7 @@ WORKDIR /app
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 
-# Install dependencies for the pruned workspace
+# Install all dependencies (including dev dependencies for build)
 RUN pnpm install --frozen-lockfile
 
 # Builder stage
@@ -48,15 +48,27 @@ COPY tsconfig.base.json tsconfig.json ./
 # Build the web app using Turbo
 RUN pnpm turbo build --filter=web
 
+# Production dependencies stage - install only production dependencies
+FROM base AS prod-deps
+WORKDIR /app
+
+# Copy pruned lockfile and package.json files
+COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+
+# Install only production dependencies (vite is needed for SSR preview)
+RUN pnpm install --frozen-lockfile --prod
+
 # Runner stage - use Node.js to serve the SSR app
 FROM base AS runner
 WORKDIR /app
 
-# Copy node_modules from deps (includes vite and all dependencies needed for preview)
-COPY --from=deps /app/node_modules ./node_modules
+# Copy production node_modules
+COPY --from=prod-deps /app/node_modules ./node_modules
 
-# Copy the entire apps/web directory to maintain proper structure
-COPY --from=builder /app/apps/web ./apps/web
+# Copy only the built output and package.json
+COPY --from=builder /app/apps/web/dist ./apps/web/dist
+COPY --from=builder /app/apps/web/package.json ./apps/web/package.json
 
 # Set working directory to the web app
 WORKDIR /app/apps/web

@@ -21,7 +21,7 @@ COPY . .
 # Prune the monorepo to only include dependencies for the server
 RUN turbo prune server --docker
 
-# Dependencies stage
+# Dependencies stage - install all dependencies for building
 FROM base AS deps
 WORKDIR /app
 
@@ -29,7 +29,7 @@ WORKDIR /app
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 
-# Install dependencies for the pruned workspace
+# Install all dependencies (including dev dependencies for build)
 RUN pnpm install --frozen-lockfile
 
 # Builder stage
@@ -48,15 +48,27 @@ COPY tsconfig.base.json tsconfig.json ./
 # Build the server using Turbo
 RUN pnpm turbo build --filter=server
 
+# Production dependencies stage - install only production dependencies
+FROM base AS prod-deps
+WORKDIR /app
+
+# Copy pruned lockfile and package.json files
+COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+
+# Install only production dependencies
+RUN pnpm install --frozen-lockfile --prod
+
 # Runner stage
 FROM base AS runner
 WORKDIR /app
 
-# Copy node_modules from builder (includes all runtime dependencies)
-COPY --from=builder /app/node_modules ./node_modules
+# Copy production node_modules
+COPY --from=prod-deps /app/node_modules ./node_modules
 
-# Copy the entire apps/server directory to maintain proper structure
-COPY --from=builder /app/apps/server ./apps/server
+# Copy only the built output and package.json
+COPY --from=builder /app/apps/server/dist ./apps/server/dist
+COPY --from=builder /app/apps/server/package.json ./apps/server/package.json
 
 # Set working directory to the server app
 WORKDIR /app/apps/server
