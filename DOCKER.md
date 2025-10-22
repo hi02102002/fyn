@@ -170,3 +170,17 @@ The Docker setup includes:
 - **Database**: PostgreSQL 16 database
 
 All services communicate through a Docker bridge network.
+
+## Turborepo Integration
+
+The Dockerfiles are optimized for Turborepo monorepos using the `turbo prune` command:
+
+1. **Pruner Stage**: Uses `turbo prune` to create a minimal subset of the monorepo containing only the necessary dependencies for each app
+2. **Dependencies Stage**: Installs only the pruned dependencies, reducing build time and image size
+3. **Builder Stage**: Builds the application using `pnpm turbo build` with Turborepo's caching and optimization
+4. **Runner Stage**: Minimal production image with only the built output
+
+This approach provides:
+- Faster builds with Turborepo's incremental caching
+- Smaller Docker images with only required dependencies
+- Better layer caching for subsequent builds
