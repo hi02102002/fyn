@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - DATABASE_URL=${DATABASE_URL}
+    env_file:
+      - apps/server/.env
+    networks:
+      - fyn-network
+    depends_on:
+      - db
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - VITE_SERVER_URL=${VITE_SERVER_URL:-http://localhost:3000}
+    env_file:
+      - apps/web/.env
+    networks:
+      - fyn-network
+    depends_on:
+      - server
+
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-fyn}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-fyn}
+      - POSTGRES_DB=${POSTGRES_DB:-fyn}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - fyn-network
+
+networks:
+  fyn-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
