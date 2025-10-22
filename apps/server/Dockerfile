@@ -1,8 +1,8 @@
 # Base image with Node.js
 FROM node:20-alpine AS base
 
-# Install pnpm
-RUN npm install -g pnpm@9.15.2
+# Enable corepack for pnpm
+RUN corepack enable
 
 # Dependencies stage
 FROM base AS deps
