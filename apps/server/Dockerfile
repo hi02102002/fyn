@@ -52,7 +52,10 @@ RUN pnpm turbo build --filter=server
 FROM base AS runner
 WORKDIR /app
 
-# Copy only necessary files for production
+# Copy node_modules from builder (includes all runtime dependencies)
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copy built output
 COPY --from=builder /app/apps/server/dist ./dist
 COPY --from=builder /app/apps/server/package.json ./package.json
 
