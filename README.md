@@ -2,6 +2,7 @@
 
 ## Features
 
+- **Bot Engine** - Conversational bot builder (Typebot-like) with visual flow editor, multiple block types, and live preview
 - **TypeScript** - For type safety and improved developer experience
 - **TanStack Start** - SSR framework with TanStack Router
 - **TailwindCSS** - Utility-first CSS for rapid UI development
@@ -57,6 +58,19 @@ fyn/
 │   ├── auth/        # Authentication configuration & logic
 │   └── db/          # Database schema & queries
 ```
+
+## Bot Engine
+
+This project includes a conversational bot builder inspired by Typebot. Create interactive chatbots with:
+
+- **Text blocks** - Display messages
+- **Input blocks** - Collect user responses
+- **Choice blocks** - Present multiple options
+- **Conditional blocks** - Create branching logic
+
+Visit `/bots` after logging in to start building your first bot!
+
+For detailed documentation, see [BOT_ENGINE.md](./BOT_ENGINE.md).
 
 ## Available Scripts
 
