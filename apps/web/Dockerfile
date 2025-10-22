@@ -8,8 +8,12 @@ RUN corepack enable
 FROM base AS pruner
 WORKDIR /app
 
+# Set up pnpm global bin directory
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
 # Install turbo globally
-RUN pnpm install -g turbo
+RUN pnpm add -g turbo
 
 # Copy the entire monorepo
 COPY . .
