@@ -12,6 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BotsIndexRouteImport } from './routes/bots.index'
+import { Route as BotsNewRouteImport } from './routes/bots.new'
+import { Route as BotsBotIdRouteImport } from './routes/bots.$botId'
+import { Route as BotsBotIdPreviewRouteImport } from './routes/bots.$botId.preview'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -28,35 +32,92 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BotsIndexRoute = BotsIndexRouteImport.update({
+  id: '/bots/',
+  path: '/bots/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BotsNewRoute = BotsNewRouteImport.update({
+  id: '/bots/new',
+  path: '/bots/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BotsBotIdRoute = BotsBotIdRouteImport.update({
+  id: '/bots/$botId',
+  path: '/bots/$botId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BotsBotIdPreviewRoute = BotsBotIdPreviewRouteImport.update({
+  id: '/preview',
+  path: '/preview',
+  getParentRoute: () => BotsBotIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/bots/$botId': typeof BotsBotIdRouteWithChildren
+  '/bots/new': typeof BotsNewRoute
+  '/bots': typeof BotsIndexRoute
+  '/bots/$botId/preview': typeof BotsBotIdPreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/bots/$botId': typeof BotsBotIdRouteWithChildren
+  '/bots/new': typeof BotsNewRoute
+  '/bots': typeof BotsIndexRoute
+  '/bots/$botId/preview': typeof BotsBotIdPreviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/bots/$botId': typeof BotsBotIdRouteWithChildren
+  '/bots/new': typeof BotsNewRoute
+  '/bots/': typeof BotsIndexRoute
+  '/bots/$botId/preview': typeof BotsBotIdPreviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/bots/$botId'
+    | '/bots/new'
+    | '/bots'
+    | '/bots/$botId/preview'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login'
-  id: '__root__' | '/' | '/dashboard' | '/login'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/bots/$botId'
+    | '/bots/new'
+    | '/bots'
+    | '/bots/$botId/preview'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/bots/$botId'
+    | '/bots/new'
+    | '/bots/'
+    | '/bots/$botId/preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
+  BotsBotIdRoute: typeof BotsBotIdRouteWithChildren
+  BotsNewRoute: typeof BotsNewRoute
+  BotsIndexRoute: typeof BotsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,13 +143,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bots/': {
+      id: '/bots/'
+      path: '/bots'
+      fullPath: '/bots'
+      preLoaderRoute: typeof BotsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bots/new': {
+      id: '/bots/new'
+      path: '/bots/new'
+      fullPath: '/bots/new'
+      preLoaderRoute: typeof BotsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bots/$botId': {
+      id: '/bots/$botId'
+      path: '/bots/$botId'
+      fullPath: '/bots/$botId'
+      preLoaderRoute: typeof BotsBotIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bots/$botId/preview': {
+      id: '/bots/$botId/preview'
+      path: '/preview'
+      fullPath: '/bots/$botId/preview'
+      preLoaderRoute: typeof BotsBotIdPreviewRouteImport
+      parentRoute: typeof BotsBotIdRoute
+    }
   }
 }
+
+interface BotsBotIdRouteChildren {
+  BotsBotIdPreviewRoute: typeof BotsBotIdPreviewRoute
+}
+
+const BotsBotIdRouteChildren: BotsBotIdRouteChildren = {
+  BotsBotIdPreviewRoute: BotsBotIdPreviewRoute,
+}
+
+const BotsBotIdRouteWithChildren = BotsBotIdRoute._addFileChildren(
+  BotsBotIdRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
+  BotsBotIdRoute: BotsBotIdRouteWithChildren,
+  BotsNewRoute: BotsNewRoute,
+  BotsIndexRoute: BotsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

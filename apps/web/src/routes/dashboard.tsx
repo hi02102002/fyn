@@ -32,13 +32,38 @@ export const Route = createFileRoute("/dashboard")({
 function RouteComponent() {
 	const { session } = Route.useRouteContext();
 
-	const privateData = useQuery(orpc.privateData.queryOptions());
+	const { data: bots } = useQuery(orpc.bot.listBots.queryOptions());
 
 	return (
-		<div>
-			<h1>Dashboard</h1>
-			<p>Welcome {session.data?.user.name}</p>
-			<p>API: {privateData.data?.message}</p>
+		<div className="container mx-auto py-8">
+			<h1 className="text-3xl font-bold mb-4">Dashboard</h1>
+			<p className="text-lg mb-8">Welcome {session.data?.user.name}</p>
+			
+			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				<div className="border rounded-lg p-6 bg-white">
+					<h2 className="text-xl font-semibold mb-2">My Bots</h2>
+					<p className="text-3xl font-bold mb-2">{bots?.length || 0}</p>
+					<p className="text-sm text-gray-500 mb-4">Total bots created</p>
+					<a 
+						href="/bots" 
+						className="text-blue-500 hover:underline text-sm"
+					>
+						View all bots →
+					</a>
+				</div>
+
+				<div className="border rounded-lg p-6 bg-white">
+					<h2 className="text-xl font-semibold mb-2">Quick Actions</h2>
+					<div className="space-y-2">
+						<a 
+							href="/bots/new" 
+							className="block text-blue-500 hover:underline text-sm"
+						>
+							+ Create new bot
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }

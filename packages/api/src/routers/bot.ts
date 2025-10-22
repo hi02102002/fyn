@@ -1,5 +1,4 @@
-import { bot, botBlock, botResponse, db } from "@fyn/db";
-import { eq } from "drizzle-orm";
+import { bot, botBlock, botResponse, db, eq } from "@fyn/db";
 import { z } from "zod";
 import { protectedProcedure, publicProcedure } from "../index";
 
@@ -290,7 +289,7 @@ export const botRouter = {
 					// Get connections array
 					const connections = currentBlock.connections as string[];
 					// For conditional blocks, first connection is "true" path, second is "false" path
-					nextBlockId = conditionMet ? connections?.[0] : connections?.[1];
+					nextBlockId = conditionMet ? (connections?.[0] || null) : (connections?.[1] || null);
 				}
 			} else {
 				// For non-conditional blocks, take the first connection
