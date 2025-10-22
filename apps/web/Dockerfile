@@ -55,11 +55,11 @@ WORKDIR /app
 # Copy node_modules from deps (includes vite and all dependencies needed for preview)
 COPY --from=deps /app/node_modules ./node_modules
 
-# Copy package.json
-COPY --from=builder /app/apps/web/package.json ./package.json
+# Copy the entire apps/web directory to maintain proper structure
+COPY --from=builder /app/apps/web ./apps/web
 
-# Copy built app from builder
-COPY --from=builder /app/apps/web/dist ./dist
+# Set working directory to the web app
+WORKDIR /app/apps/web
 
 # Set environment to production
 ENV NODE_ENV=production
@@ -67,5 +67,5 @@ ENV NODE_ENV=production
 # Expose port 3001 (default web port)
 EXPOSE 3001
 
-# Start the web server with vite preview
-CMD ["npx", "vite", "preview", "--host", "0.0.0.0", "--port", "3001"]
+# Start the web server with vite preview using the local vite
+CMD ["../../node_modules/.bin/vite", "preview", "--host", "0.0.0.0", "--port", "3001"]

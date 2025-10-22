@@ -55,9 +55,11 @@ WORKDIR /app
 # Copy node_modules from builder (includes all runtime dependencies)
 COPY --from=builder /app/node_modules ./node_modules
 
-# Copy built output
-COPY --from=builder /app/apps/server/dist ./dist
-COPY --from=builder /app/apps/server/package.json ./package.json
+# Copy the entire apps/server directory to maintain proper structure
+COPY --from=builder /app/apps/server ./apps/server
+
+# Set working directory to the server app
+WORKDIR /app/apps/server
 
 # Set environment to production
 ENV NODE_ENV=production
