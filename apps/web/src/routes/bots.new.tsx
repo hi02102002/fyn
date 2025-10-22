@@ -1,8 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
-import { orpc, queryClient } from "@/utils/orpc";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -13,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { authClient } from "@/lib/auth-client";
+import { orpc, queryClient } from "@/utils/orpc";
 
 export const Route = createFileRoute("/bots/new")({
 	component: RouteComponent,
@@ -52,7 +52,7 @@ function RouteComponent() {
 	};
 
 	return (
-		<div className="container mx-auto py-8 max-w-2xl">
+		<div className="container mx-auto max-w-2xl py-8">
 			<Card>
 				<CardHeader>
 					<CardTitle>Create New Bot</CardTitle>
@@ -84,7 +84,10 @@ function RouteComponent() {
 						</div>
 
 						<div className="flex gap-2">
-							<Button type="submit" disabled={!name.trim() || createBot.isPending}>
+							<Button
+								type="submit"
+								disabled={!name.trim() || createBot.isPending}
+							>
 								{createBot.isPending ? "Creating..." : "Create Bot"}
 							</Button>
 							<Button

@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
-import { authClient } from "@/lib/auth-client";
-import { orpc } from "@/utils/orpc";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -10,6 +8,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { authClient } from "@/lib/auth-client";
+import { orpc } from "@/utils/orpc";
 
 export const Route = createFileRoute("/bots/")({
 	component: RouteComponent,
@@ -31,15 +31,15 @@ function RouteComponent() {
 	if (isLoading) {
 		return (
 			<div className="container mx-auto py-8">
-				<div className="flex items-center justify-between mb-6">
-					<h1 className="text-3xl font-bold">My Bots</h1>
+				<div className="mb-6 flex items-center justify-between">
+					<h1 className="font-bold text-3xl">My Bots</h1>
 				</div>
 				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 					{[1, 2, 3].map((i) => (
 						<Card key={i}>
 							<CardHeader>
-								<div className="h-6 bg-gray-200 rounded animate-pulse" />
-								<div className="h-4 bg-gray-100 rounded animate-pulse mt-2" />
+								<div className="h-6 animate-pulse rounded bg-gray-200" />
+								<div className="mt-2 h-4 animate-pulse rounded bg-gray-100" />
 							</CardHeader>
 						</Card>
 					))}
@@ -50,8 +50,8 @@ function RouteComponent() {
 
 	return (
 		<div className="container mx-auto py-8">
-			<div className="flex items-center justify-between mb-6">
-				<h1 className="text-3xl font-bold">My Bots</h1>
+			<div className="mb-6 flex items-center justify-between">
+				<h1 className="font-bold text-3xl">My Bots</h1>
 				<Link to="/bots/new">
 					<Button>Create New Bot</Button>
 				</Link>
@@ -61,7 +61,7 @@ function RouteComponent() {
 				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 					{bots.map((bot) => (
 						<Link key={bot.id} to="/bots/$botId" params={{ botId: bot.id }}>
-							<Card className="hover:shadow-lg transition-shadow cursor-pointer">
+							<Card className="cursor-pointer transition-shadow hover:shadow-lg">
 								<CardHeader>
 									<CardTitle>{bot.name}</CardTitle>
 									<CardDescription>
@@ -69,7 +69,7 @@ function RouteComponent() {
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<p className="text-sm text-gray-500">
+									<p className="text-gray-500 text-sm">
 										Created {new Date(bot.createdAt).toLocaleDateString()}
 									</p>
 								</CardContent>
@@ -80,7 +80,7 @@ function RouteComponent() {
 			) : (
 				<Card>
 					<CardContent className="flex flex-col items-center justify-center py-12">
-						<p className="text-gray-500 mb-4">
+						<p className="mb-4 text-gray-500">
 							You haven't created any bots yet
 						</p>
 						<Link to="/bots/new">

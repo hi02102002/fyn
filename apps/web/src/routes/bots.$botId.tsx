@@ -1,17 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client";
-import { orpc, queryClient } from "@/utils/orpc";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { authClient } from "@/lib/auth-client";
+import { orpc, queryClient } from "@/utils/orpc";
 
 export const Route = createFileRoute("/bots/$botId")({
 	component: RouteComponent,
@@ -70,7 +65,9 @@ function RouteComponent() {
 	const updateBot = useMutation({
 		...orpc.bot.updateBot.mutationOptions(),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["bot", "getBot", { input: { botId } }] });
+			queryClient.invalidateQueries({
+				queryKey: ["bot", "getBot", { input: { botId } }],
+			});
 		},
 	});
 
@@ -93,10 +90,15 @@ function RouteComponent() {
 		setBlockPaletteOpen(false);
 	};
 
-	const updateBlockConfig = (blockId: string, config: Partial<Block["config"]>) => {
+	const updateBlockConfig = (
+		blockId: string,
+		config: Partial<Block["config"]>,
+	) => {
 		setBlocks(
 			blocks.map((block) =>
-				block.id === blockId ? { ...block, config: { ...block.config, ...config } } : block,
+				block.id === blockId
+					? { ...block, config: { ...block.config, ...config } }
+					: block,
 			),
 		);
 	};
@@ -132,8 +134,8 @@ function RouteComponent() {
 	if (isLoading) {
 		return (
 			<div className="container mx-auto py-8">
-				<div className="h-8 bg-gray-200 rounded animate-pulse mb-4" />
-				<div className="h-96 bg-gray-100 rounded animate-pulse" />
+				<div className="mb-4 h-8 animate-pulse rounded bg-gray-200" />
+				<div className="h-96 animate-pulse rounded bg-gray-100" />
 			</div>
 		);
 	}
@@ -151,13 +153,13 @@ function RouteComponent() {
 	}
 
 	return (
-		<div className="h-full flex flex-col">
+		<div className="flex h-full flex-col">
 			{/* Header */}
 			<div className="border-b bg-white px-6 py-4">
 				<div className="flex items-center justify-between">
 					<div>
-						<h1 className="text-2xl font-bold">{bot.name}</h1>
-						<p className="text-sm text-gray-500">{bot.description}</p>
+						<h1 className="font-bold text-2xl">{bot.name}</h1>
+						<p className="text-gray-500 text-sm">{bot.description}</p>
 					</div>
 					<div className="flex gap-2">
 						<Button
@@ -173,11 +175,11 @@ function RouteComponent() {
 				</div>
 			</div>
 
-			<div className="flex-1 flex overflow-hidden">
+			<div className="flex flex-1 overflow-hidden">
 				{/* Block Palette */}
 				{blockPaletteOpen && (
-					<div className="w-64 border-r bg-white p-4 overflow-y-auto">
-						<h2 className="font-semibold mb-4">Block Types</h2>
+					<div className="w-64 overflow-y-auto border-r bg-white p-4">
+						<h2 className="mb-4 font-semibold">Block Types</h2>
 						<div className="space-y-2">
 							<Button
 								variant="outline"
@@ -212,12 +214,12 @@ function RouteComponent() {
 				)}
 
 				{/* Canvas */}
-				<div className="flex-1 bg-gray-50 overflow-auto p-8">
-					<div className="space-y-4 max-w-4xl">
+				<div className="flex-1 overflow-auto bg-gray-50 p-8">
+					<div className="max-w-4xl space-y-4">
 						{blocks.length === 0 ? (
 							<Card>
 								<CardContent className="py-12 text-center">
-									<p className="text-gray-500 mb-4">
+									<p className="mb-4 text-gray-500">
 										No blocks yet. Add blocks to build your bot flow.
 									</p>
 									<Button onClick={() => setBlockPaletteOpen(true)}>
@@ -230,15 +232,13 @@ function RouteComponent() {
 								<Card
 									key={block.id}
 									className={`cursor-pointer transition-all ${
-										selectedBlockId === block.id
-											? "ring-2 ring-blue-500"
-											: ""
+										selectedBlockId === block.id ? "ring-2 ring-blue-500" : ""
 									}`}
 									onClick={() => setSelectedBlockId(block.id)}
 								>
 									<CardHeader>
 										<div className="flex items-center justify-between">
-											<CardTitle className="text-sm font-medium">
+											<CardTitle className="font-medium text-sm">
 												Block {index + 1}: {block.type.toUpperCase()}
 											</CardTitle>
 											<div className="flex gap-2">
@@ -299,16 +299,16 @@ function RouteComponent() {
 
 				{/* Configuration Panel */}
 				{selectedBlock && (
-					<div className="w-80 border-l bg-white p-4 overflow-y-auto">
-						<h2 className="font-semibold mb-4">Block Settings</h2>
+					<div className="w-80 overflow-y-auto border-l bg-white p-4">
+						<h2 className="mb-4 font-semibold">Block Settings</h2>
 						<div className="space-y-4">
 							<div>
-								<Label className="text-xs text-gray-500">Block ID</Label>
-								<p className="text-sm font-mono">{selectedBlock.id}</p>
+								<Label className="text-gray-500 text-xs">Block ID</Label>
+								<p className="font-mono text-sm">{selectedBlock.id}</p>
 							</div>
 
 							<div>
-								<Label className="text-xs text-gray-500">Type</Label>
+								<Label className="text-gray-500 text-xs">Type</Label>
 								<p className="text-sm">{selectedBlock.type}</p>
 							</div>
 
@@ -360,7 +360,7 @@ function RouteComponent() {
 								<div>
 									<Label>Options (one per line)</Label>
 									<textarea
-										className="w-full border rounded p-2 text-sm"
+										className="w-full rounded border p-2 text-sm"
 										rows={4}
 										value={selectedBlock.config.options?.join("\n") || ""}
 										onChange={(e) =>

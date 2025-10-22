@@ -36,28 +36,25 @@ function RouteComponent() {
 
 	return (
 		<div className="container mx-auto py-8">
-			<h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-			<p className="text-lg mb-8">Welcome {session.data?.user.name}</p>
-			
+			<h1 className="mb-4 font-bold text-3xl">Dashboard</h1>
+			<p className="mb-8 text-lg">Welcome {session.data?.user.name}</p>
+
 			<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-				<div className="border rounded-lg p-6 bg-white">
-					<h2 className="text-xl font-semibold mb-2">My Bots</h2>
-					<p className="text-3xl font-bold mb-2">{bots?.length || 0}</p>
-					<p className="text-sm text-gray-500 mb-4">Total bots created</p>
-					<a 
-						href="/bots" 
-						className="text-blue-500 hover:underline text-sm"
-					>
+				<div className="rounded-lg border bg-white p-6">
+					<h2 className="mb-2 font-semibold text-xl">My Bots</h2>
+					<p className="mb-2 font-bold text-3xl">{bots?.length || 0}</p>
+					<p className="mb-4 text-gray-500 text-sm">Total bots created</p>
+					<a href="/bots" className="text-blue-500 text-sm hover:underline">
 						View all bots →
 					</a>
 				</div>
 
-				<div className="border rounded-lg p-6 bg-white">
-					<h2 className="text-xl font-semibold mb-2">Quick Actions</h2>
+				<div className="rounded-lg border bg-white p-6">
+					<h2 className="mb-2 font-semibold text-xl">Quick Actions</h2>
 					<div className="space-y-2">
-						<a 
-							href="/bots/new" 
-							className="block text-blue-500 hover:underline text-sm"
+						<a
+							href="/bots/new"
+							className="block text-blue-500 text-sm hover:underline"
 						>
 							+ Create new bot
 						</a>

@@ -111,10 +111,7 @@ export const botRouter = {
 			const { botId, blocks, ...updateData } = input;
 
 			// Verify ownership
-			const [botData] = await db
-				.select()
-				.from(bot)
-				.where(eq(bot.id, botId));
+			const [botData] = await db.select().from(bot).where(eq(bot.id, botId));
 
 			if (!botData || botData.userId !== userId) {
 				throw new Error("Bot not found or access denied");
@@ -154,10 +151,7 @@ export const botRouter = {
 			}
 
 			// Return updated bot
-			const [updatedBot] = await db
-				.select()
-				.from(bot)
-				.where(eq(bot.id, botId));
+			const [updatedBot] = await db.select().from(bot).where(eq(bot.id, botId));
 
 			const updatedBlocks = await db
 				.select()
@@ -194,13 +188,15 @@ export const botRouter = {
 	executeBot: publicProcedure
 		.input(z.object({ botId: z.string() }).merge(executeBotSchema))
 		.handler(async ({ input }) => {
-			const { botId, sessionId, currentBlockId, response: userResponse } = input;
+			const {
+				botId,
+				sessionId,
+				currentBlockId,
+				response: userResponse,
+			} = input;
 
 			// Get bot and blocks
-			const [botData] = await db
-				.select()
-				.from(bot)
-				.where(eq(bot.id, botId));
+			const [botData] = await db.select().from(bot).where(eq(bot.id, botId));
 
 			if (!botData) {
 				throw new Error("Bot not found");
@@ -227,7 +223,10 @@ export const botRouter = {
 
 				if (existingResponse) {
 					// Update existing response
-					const responses = existingResponse.responses as Record<string, unknown>;
+					const responses = existingResponse.responses as Record<
+						string,
+						unknown
+					>;
 					responses[currentBlockId] = userResponse;
 
 					await db
@@ -267,7 +266,10 @@ export const botRouter = {
 						operator: string;
 						value: string;
 					};
-					const responses = sessionResponses.responses as Record<string, unknown>;
+					const responses = sessionResponses.responses as Record<
+						string,
+						unknown
+					>;
 					const variableValue = String(responses[condition.variable] || "");
 
 					let conditionMet = false;
@@ -289,7 +291,9 @@ export const botRouter = {
 					// Get connections array
 					const connections = currentBlock.connections as string[];
 					// For conditional blocks, first connection is "true" path, second is "false" path
-					nextBlockId = conditionMet ? (connections?.[0] || null) : (connections?.[1] || null);
+					nextBlockId = conditionMet
+						? connections?.[0] || null
+						: connections?.[1] || null;
 				}
 			} else {
 				// For non-conditional blocks, take the first connection
@@ -297,7 +301,9 @@ export const botRouter = {
 				nextBlockId = connections?.[0] || null;
 			}
 
-			const nextBlock = nextBlockId ? blocks.find((b) => b.id === nextBlockId) : null;
+			const nextBlock = nextBlockId
+				? blocks.find((b) => b.id === nextBlockId)
+				: null;
 
 			return {
 				currentBlock: {
