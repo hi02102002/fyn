@@ -9,7 +9,7 @@ export async function createContext({ context }: CreateContextOptions) {
 	const session = await api.getSession({
 		headers: context.req.raw.headers,
 	});
-	
+
 	return {
 		session,
 	};
