@@ -1,21 +1,22 @@
 {
-	"name": "@fyn/auth",
+	"name": "@fyn/utils",
+	"type": "module",
 	"exports": {
 		".": {
-			"types": "./src/index.d.ts",
+			"types": "./src/index.ts",
 			"default": "./src/index.ts"
 		},
 		"./*": {
-			"types": "./src/*.ts",
-			"default": "./src/*.ts"
+			"types": "./src/**/*.ts",
+			"default": "./src/**/*.ts"
 		}
 	},
-	"type": "module",
 	"scripts": {
 		"build": "tsdown",
 		"check-types": "tsc -b"
 	},
 	"devDependencies": {
+		"@types/nodemailer": "^7.0.2",
 		"tsdown": "catalog:",
 		"@fyn/tsconfig": "workspace:*"
 	},
@@ -23,9 +24,9 @@
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"better-auth": "catalog:",
-		"dotenv": "catalog:",
-		"zod": "catalog:",
-		"@fyn/db": "workspace:*"
+		"google-auth-library": "^10.4.1",
+		"googleapis": "^164.0.0",
+		"nodemailer": "^7.0.9",
+		"zod": "catalog:"
 	}
 }

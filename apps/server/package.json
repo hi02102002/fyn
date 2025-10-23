@@ -1,5 +1,5 @@
 {
-	"name": "server",
+	"name": "@fyn/server",
 	"main": "src/index.ts",
 	"type": "module",
 	"scripts": {
@@ -26,6 +26,7 @@
 		"typescript": "catalog:",
 		"tsx": "^4.19.2",
 		"@types/node": "^22.13.11",
-		"tsdown": "catalog:"
+		"tsdown": "catalog:",
+		"@fyn/tsconfig": "workspace:*"
 	}
 }

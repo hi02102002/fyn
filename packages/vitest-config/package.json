@@ -9,7 +9,6 @@
 		"./ui": "./dist/configs/ui-config.js"
 	},
 	"scripts": {
-		"build": "tsdown",
 		"collect-json-reports": "node dist/scripts/collect-json-outputs.js",
 		"merge-json-reports": "nyc merge coverage/raw coverage/merged/merged-coverage.json",
 		"report": "nyc report -t coverage/merged --report-dir coverage/report --reporter=html --exclude-after-remap false",
@@ -24,6 +23,8 @@
 		"glob": "^11.0.1",
 		"jsdom": "^26.0.0",
 		"nyc": "^17.1.0",
-		"typescript": "catalog:"
+		"typescript": "catalog:",
+		"@fyn/tsconfig": "workspace:*",
+		"tsdown": "catalog:"
 	}
 }

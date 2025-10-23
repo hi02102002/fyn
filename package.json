@@ -23,18 +23,18 @@
 		"test": "turbo run test",
 		"test:projects": "vitest run",
 		"test:projects:watch": "vitest --watch",
-		"view-report": "turbo run view-report"
+		"view-report": "turbo run view-report",
+		"clear-workspace": "pnpm -r exec rm -rf node_modules"
 	},
 	"dependencies": {
-		"dotenv": "^17.2.2",
-		"zod": "^4.1.11"
+		"dotenv": "^17.2.2"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.2.0",
 		"@fyn/vitest-config": "workspace:*",
+		"@fyn/tsconfig": "workspace:*",
 		"@types/node": "^22.13.11",
-		"tsdown": "^0.15.5",
-		"turbo": "^2.5.4",
+		"turbo": "^2.5.8",
 		"vitest": "catalog:"
 	},
 	"packageManager": "pnpm@9.15.2"

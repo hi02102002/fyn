@@ -1,3 +1,4 @@
+import { hello } from "@fyn/utils";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { orpc } from "@/utils/orpc";
@@ -42,6 +43,9 @@ function HomeComponent() {
 									? "Connected"
 									: "Disconnected"}
 						</span>
+						<button onClick={() => hello()} type="button">
+							Hello
+						</button>
 					</div>
 				</section>
 			</div>
