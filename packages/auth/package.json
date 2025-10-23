@@ -12,6 +12,7 @@
 	},
 	"type": "module",
 	"scripts": {
+		"build": "tsdown",
 		"check-types": "tsc -b"
 	},
 	"devDependencies": {

@@ -15,11 +15,13 @@ RUN --mount=type=cache,target=/root/.pnpm-store \
 FROM base AS installer-production
 COPY --from=prune /app/out/json/ ./
 RUN --mount=type=cache,target=/root/.pnpm-store \
-    pnpm install --prod --frozen-lockfile
+    pnpm install --prod 
 
 FROM base AS builder
-COPY --from=installer /app/node_modules ./node_modules
 COPY --from=prune /app/out/full/ ./
+COPY --from=installer /app/node_modules ./node_modules
+COPY --from=installer /app/apps/server/node_modules ./apps/server/node_modules
+COPY --from=installer /app/packages/ ./packages/
 RUN pnpm dlx turbo run build --filter=@fyn/server
 
 # ---------- Runner ----------
@@ -28,8 +30,9 @@ RUN addgroup --system --gid 1001 server-group && adduser --system --uid 1001 ser
 USER server-user
 
 WORKDIR /app
-COPY --from=installer-production --chown=server-user:server-group /app/node_modules ./node_modules
 COPY --from=prune --chown=server-user:server-group /app/out/json/ ./
+COPY --from=installer-production --chown=server-user:server-group /app/node_modules ./node_modules
+COPY --from=installer-production --chown=server-user:server-group /app/apps/server/node_modules ./apps/server/node_modules
 COPY --from=builder --chown=server-user:server-group /app/apps/server/dist ./apps/server/dist
 
 WORKDIR /app/apps/server
