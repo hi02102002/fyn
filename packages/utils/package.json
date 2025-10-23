@@ -1,5 +1,5 @@
 {
-	"name": "@fyn/mail",
+	"name": "@fyn/utils",
 	"type": "module",
 	"exports": {
 		".": {
