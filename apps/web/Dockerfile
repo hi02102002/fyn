@@ -37,7 +37,6 @@ COPY --from=builder --chown=web-user:web-group /app/apps/web/.output ./apps/web/
 
 WORKDIR /app/apps/web
 
-EXPOSE 3000
-
+EXPOSE 3001
 
 CMD ["node", ".output/server/index.mjs"]
