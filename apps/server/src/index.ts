@@ -11,7 +11,11 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
-const app = new Hono();
+const app = new Hono<{
+	Variables: {
+		io?: TIo;
+	};
+}>();
 
 app.use(logger());
 app.use(
@@ -75,6 +79,7 @@ app.get("/", (c) => {
 	return c.text("OK");
 });
 
+import type { TIo } from "@fyn/socket";
 import { serve } from "@hono/node-server";
 
 serve(
