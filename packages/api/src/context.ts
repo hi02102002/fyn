@@ -1,9 +1,14 @@
 import { api } from "@fyn/auth";
+import type { TIo } from "@fyn/socket";
 import type { Context as HonoContext } from "hono";
 
 export type CreateContextOptions = {
-	context: HonoContext;
-};
+		context: HonoContext<{
+			Variables: {
+				io?: TIo;
+			};
+		}>;
+	};
 
 export async function createContext({ context }: CreateContextOptions) {
 	const session = await api.getSession({
@@ -12,6 +17,7 @@ export async function createContext({ context }: CreateContextOptions) {
 
 	return {
 		session,
+		io: context.get("io") as TIo,
 	};
 }
 

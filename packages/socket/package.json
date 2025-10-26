@@ -1,0 +1,28 @@
+{
+	"name": "@fyn/socket",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./src/index.ts",
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"types": "./src/**/*.ts",
+			"default": "./src/**/*.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsdown",
+		"check-types": "tsc -b"
+	},
+	"devDependencies": {
+		"@fyn/tsconfig": "workspace:*",
+		"tsdown": "catalog:"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"socket.io": "^4.8.1"
+	}
+}

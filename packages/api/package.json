@@ -30,6 +30,7 @@
 		"dotenv": "catalog:",
 		"zod": "catalog:",
 		"@fyn/auth": "workspace:*",
-		"@fyn/db": "workspace:*"
+		"@fyn/db": "workspace:*",
+		"@fyn/socket": "workspace:*"
 	}
 }
