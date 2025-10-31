@@ -16,8 +16,10 @@ function RouteComponent() {
 					Please log in to continue using our features.
 				</p>
 			</div>
-			<SocialBtn provider="google" />
-			<SocialBtn provider="github" />
+			<div className="grid grid-cols-2 gap-3">
+				<SocialBtn provider="google" />
+				<SocialBtn provider="github" />
+			</div>
 			<div className="relative">
 				<div className="absolute inset-0 flex items-center">
 					<div className="w-full border-strong border-t" />

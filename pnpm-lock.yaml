@@ -397,6 +397,9 @@ importers:
         specifier: 'catalog:'
         version: 4.1.12
     devDependencies:
+      '@fyn/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       tsdown:
         specifier: 'catalog:'
         version: 0.15.6(typescript@5.9.3)
@@ -8892,7 +8895,7 @@ snapshots:
     dependencies:
       cookie-es: 2.0.0
       fetchdts: 0.1.7
-      rou3: 0.7.7
+      rou3: 0.7.9
       srvx: 0.8.15
     optionalDependencies:
       crossws: 0.4.1(srvx@0.8.15)

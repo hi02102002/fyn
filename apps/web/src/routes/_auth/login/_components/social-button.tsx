@@ -49,12 +49,7 @@ export function SocialBtn({ provider }: TProps) {
 	};
 
 	return (
-		<Button
-			variant="outline"
-			className="w-full gap-1"
-			onClick={handleLogin}
-			size="sm"
-		>
+		<Button variant="outline" className="w-full gap-1" onClick={handleLogin}>
 			<span>Continue with {text}</span>
 		</Button>
 	);
