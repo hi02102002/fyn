@@ -10,11 +10,16 @@ export default defineConfig({
 	plugins: [
 		tsconfigPaths(),
 		tailwindcss(),
-		tanstackStart(),
-		nitro(
-			// nitro config goes here, e.g.
-			{ config: { preset: "node-server" } },
-		),
+		tanstackStart({
+			router: {
+				routeFileIgnorePattern: "^_(components|utils|hooks|styles|types)$",
+			},
+		}),
+		nitro({
+			config: {
+				preset: "node-server",
+			},
+		}),
 		viteReact(),
 	],
 	build: {

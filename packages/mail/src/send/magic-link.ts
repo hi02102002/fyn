@@ -2,8 +2,9 @@ import { getTransporter } from "../transporter";
 
 /**
  * Send a magic link email to the specified recipient.
- * @param to
- * @param link
+ * @param to - The recipient's email address.
+ * @param url - The magic link URL.
+ * @param from - The sender's email address
  */
 export const sendMagicLinkEmail = async ({
 	to,
