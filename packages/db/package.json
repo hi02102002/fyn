@@ -3,21 +3,22 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"types": "./src/index.ts",
-			"default": "./src/index.ts"
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
 		},
 		"./*": {
-			"types": "./src/*.ts",
-			"default": "./src/*.ts"
+			"types": "./dist/*.d.ts",
+			"default": "./dist/*.js"
 		}
 	},
 	"scripts": {
 		"build": "tsdown",
-		"check-types": "tsc -b",
+		"check-types": "tsc --noEmit --skipLibCheck",
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate": "drizzle-kit migrate"
+		"db:migrate": "drizzle-kit migrate",
+		"clean": "rm -rf dist .turbo node_modules"
 	},
 	"devDependencies": {
 		"drizzle-kit": "^0.31.2",

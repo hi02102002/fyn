@@ -11,9 +11,12 @@
 			"dependsOn": ["^lint"]
 		},
 		"check-types": {
-			"dependsOn": ["^check-types"]
+			"dependsOn": ["^build"],
+			"inputs": ["src/**/*.ts", "src/**/*.tsx", "*.ts", "*.tsx", "tsconfig.json"],
+			"outputs": []
 		},
 		"dev": {
+			"dependsOn": ["^build"],
 			"cache": false,
 			"persistent": true
 		},
@@ -44,6 +47,9 @@
 		},
 		"transit": {
 			"dependsOn": ["^transit"]
+		},
+		"clean": {
+			"cache": false
 		}
 	}
 }

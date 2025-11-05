@@ -1,8 +1,10 @@
 import nodemailer from "nodemailer";
-import { oAuth2Client } from "./oauth";
+import { getOAuth2Client } from "./oauth";
 
 export const getTransporter = async () => {
-	const { token } = await oAuth2Client.getAccessToken();
+	const { token } = await getOAuth2Client()
+		.getAccessToken()
+		.catch(() => ({ token: null }));
 
 	if (!token) {
 		throw new Error("Failed to obtain access token for Gmail OAuth2");

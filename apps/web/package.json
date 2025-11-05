@@ -5,9 +5,10 @@
 	"scripts": {
 		"build": "vite build",
 		"build-report": "vite build --report",
-		"check-types": "tsc -b",
+		"check-types": "tsc --noEmit --skipLibCheck",
 		"serve": "node ./.output/server/index.mjs",
-		"dev": "vite dev --port=3001"
+		"dev": "vite dev --port=3001",
+		"clean": "rm -rf dist .turbo node_modules"
 	},
 	"dependencies": {
 		"@fyn/api": "workspace:*",
