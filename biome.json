@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.4/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
@@ -25,7 +25,13 @@
 			"!**/.svelte-kit",
 			"!**/wrangler.jsonc",
 			"!**/.source",
-			"!**/apps/web/**/*.css"
+			"!**/apps/web/**/*.css",
+			"!**/.nitro",
+			"!**/node_modules",
+			"!**/.output",
+			"!**/build",
+			"!**/coverage",
+			"!**/stats.html"
 		]
 	},
 	"formatter": {

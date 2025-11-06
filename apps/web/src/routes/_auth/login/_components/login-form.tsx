@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { getDefaultPropsForField, getFieldIsInValid } from "@/utils/form";
-import { useAuthLoading } from "../_store/useAuthLoadingStore";
+import { useAuthLoading } from "../_store/use-auth-loading";
 
 export function LoginForm() {
 	const { redirect } = useSearch({
