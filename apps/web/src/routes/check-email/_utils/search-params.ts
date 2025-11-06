@@ -1,8 +1,4 @@
-import {
-	createStandardSchemaV1,
-	parseAsString,
-	useQueryStates,
-} from "nuqs";
+import { createStandardSchemaV1, parseAsString, useQueryStates } from "nuqs";
 
 const checkEmailSearchParams = {
 	email: parseAsString.withDefault(""),
@@ -16,5 +12,5 @@ export const checkEmailSearchParamsSchema = createStandardSchemaV1(
 );
 
 export const useCheckEmailSearchParams = () => {
-  return useQueryStates(checkEmailSearchParams);
-}
+	return useQueryStates(checkEmailSearchParams);
+};

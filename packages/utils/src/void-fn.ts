@@ -1,4 +1,3 @@
-
 /**
  * A no-operation function that does nothing.
  */

@@ -1,9 +1,5 @@
-import { EnvelopeSimpleIcon, MailboxIcon } from "@phosphor-icons/react";
-import {
-	createFileRoute,
-	useCanGoBack,
-	useRouter,
-} from "@tanstack/react-router";
+import { EnvelopeSimpleIcon } from "@phosphor-icons/react";
+import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { useGoBack } from "@/hooks/use-go-back";
 import { buildEmailSearchQuery, inboxUrlFor } from "@/utils/email";
@@ -20,7 +16,9 @@ export const Route = createFileRoute("/check-email/")({
 function RouteComponent() {
 	const [search] = useCheckEmailSearchParams();
 
-	const handleGoBack = useGoBack();
+	const handleGoBack = useGoBack({
+		fallback: "/login",
+	});
 
 	return (
 		<div className="flex min-h-svh items-center justify-center">
@@ -41,17 +39,6 @@ function RouteComponent() {
 					<Button
 						className="w-full"
 						onClick={() => {
-
-							console.log(
-								inboxUrlFor(
-									search.email,
-									buildEmailSearchQuery({
-										from: "fyn.sup0210@gmail.com",
-										subject: "Your Magic Link",
-									}),
-								),
-							);
-
 							window.open(
 								inboxUrlFor(
 									search.email,

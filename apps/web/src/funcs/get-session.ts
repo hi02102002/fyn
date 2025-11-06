@@ -21,5 +21,5 @@ export const getSession = createIsomorphicFn()
 			},
 		});
 
-    return session.data;
+		return session.data;
 	});

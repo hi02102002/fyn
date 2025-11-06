@@ -44,11 +44,16 @@ function Button({
 	children,
 	isLoading = false,
 	disabled,
+	leading,
 	...props
 }: React.ComponentProps<"button"> &
 	VariantProps<typeof buttonVariants> & {
 		asChild?: boolean;
 		isLoading?: boolean;
+		/**
+		 * A leading icon to display before the button text.
+		 */
+		leading?: React.ReactNode;
 	}) {
 	const Comp = asChild ? SlotPrimitive.Slot : "button";
 
@@ -59,7 +64,7 @@ function Button({
 			disabled={disabled || isLoading}
 			{...props}
 		>
-			{isLoading ? <Spinner className="loading size-5" /> : null}
+			{isLoading ? <Spinner className="loading size-5" /> : leading}
 			{children}
 		</Comp>
 	);

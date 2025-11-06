@@ -15,12 +15,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { getDefaultPropsForField, getFieldIsInValid } from "@/utils/form";
+import { useAuthLoading } from "../_store/useAuthLoadingStore";
 
 export function LoginForm() {
 	const { redirect } = useSearch({
 		from: "/_auth/login/",
 	});
 	const navigate = useNavigate();
+	const { loading, setLoading } = useAuthLoading();
 
 	const { mutateAsync: sendMagicLink } = useMutation({
 		mutationFn: async (data: { email: string }) => {
@@ -57,9 +59,11 @@ export function LoginForm() {
 		},
 	});
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		form.handleSubmit();
+		setLoading(true);
+		await form.handleSubmit();
+		setLoading(false);
 	};
 
 	return (
@@ -75,6 +79,7 @@ export function LoginForm() {
 									{...getDefaultPropsForField(field)}
 									placeholder="fyn@example.com"
 									autoComplete="off"
+									disabled={loading}
 								/>
 								{isInvalid && <FieldError errors={field.state.meta.errors} />}
 							</Field>
@@ -85,7 +90,7 @@ export function LoginForm() {
 			<Button
 				type="submit"
 				className="w-full"
-				disabled={form.state.isSubmitting}
+				disabled={form.state.isSubmitting || loading}
 				isLoading={form.state.isSubmitting}
 			>
 				Login

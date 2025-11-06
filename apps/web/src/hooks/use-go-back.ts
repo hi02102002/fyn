@@ -1,7 +1,12 @@
-import { useCanGoBack, useNavigate, useRouter } from "@tanstack/react-router";
+import {
+	type ToOptions,
+	useCanGoBack,
+	useNavigate,
+	useRouter,
+} from "@tanstack/react-router";
 import { useCallback } from "react";
 
-export const useGoBack = () => {
+export const useGoBack = (opts?: { fallback?: ToOptions["to"] }) => {
 	const router = useRouter();
 	const canGoBack = useCanGoBack();
 	const navigate = useNavigate();
@@ -12,8 +17,8 @@ export const useGoBack = () => {
 		}
 
 		return navigate({
-			to: "/",
+			to: opts?.fallback ?? "/",
 			replace: true,
 		});
-	}, [canGoBack, router.history.back, navigate]);
+	}, [canGoBack, router.history.back, navigate, opts]);
 };

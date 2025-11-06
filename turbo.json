@@ -12,7 +12,13 @@
 		},
 		"check-types": {
 			"dependsOn": ["^build"],
-			"inputs": ["src/**/*.ts", "src/**/*.tsx", "*.ts", "*.tsx", "tsconfig.json"],
+			"inputs": [
+				"src/**/*.ts",
+				"src/**/*.tsx",
+				"*.ts",
+				"*.tsx",
+				"tsconfig.json"
+			],
 			"outputs": []
 		},
 		"dev": {

@@ -1,2 +1,2 @@
 export * from "./login-form";
-export * from './social-button'
+export * from "./social-button";

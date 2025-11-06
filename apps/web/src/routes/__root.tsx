@@ -16,10 +16,10 @@ import appCss from "@/styles/index.css?url";
 import type { orpc } from "@/utils/orpc";
 
 export interface RouterAppContext {
-		orpc: typeof orpc;
-		queryClient: QueryClient;
-		session?: Awaited<ReturnType<typeof getSession>>;
-	}
+	orpc: typeof orpc;
+	queryClient: QueryClient;
+	session?: Awaited<ReturnType<typeof getSession>>;
+}
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
 	head: () => ({

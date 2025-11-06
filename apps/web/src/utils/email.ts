@@ -12,7 +12,7 @@ export type Provider =
 export const getEmailProvider = (email: string): Provider => {
 	const domain = email.split("@")[1]?.toLowerCase() || "";
 
-  console.log("Determining provider for domain:", domain);
+	console.log("Determining provider for domain:", domain);
 
 	if (["gmail.com", "googlemail.com"].includes(domain)) return "gmail";
 	if (["outlook.com", "hotmail.com", "live.com", "msn.com"].includes(domain))

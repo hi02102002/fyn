@@ -21,6 +21,5 @@ export const getSocketInstance = () => {
 		throw new Error("Socket.io instance not initialized");
 	}
 
-
 	return _io;
 };

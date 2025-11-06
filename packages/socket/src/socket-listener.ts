@@ -1,3 +1,1 @@
-export const socketListener = () => {
-  
-}
+export const socketListener = () => {};

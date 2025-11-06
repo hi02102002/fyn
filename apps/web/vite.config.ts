@@ -12,7 +12,8 @@ export default defineConfig({
 		tailwindcss(),
 		tanstackStart({
 			router: {
-				routeFileIgnorePattern: "^_(components|utils|hooks|styles|types)$",
+				routeFileIgnorePattern:
+					"^_(components|utils|hooks|styles|types|store)$",
 			},
 		}),
 		nitro({

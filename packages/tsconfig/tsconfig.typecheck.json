@@ -9,14 +9,6 @@
 		"declarationMap": false,
 		"sourceMap": false
 	},
-	"include": [
-		"../../*/src/**/*",
-		"../../*/*.ts",
-		"../../*/*.tsx"
-	],
-	"exclude": [
-		"../../*/node_modules",
-		"../../*/dist",
-		"../../*/.turbo"
-	]
+	"include": ["../../*/src/**/*", "../../*/*.ts", "../../*/*.tsx"],
+	"exclude": ["../../*/node_modules", "../../*/dist", "../../*/.turbo"]
 }

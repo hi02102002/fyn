@@ -6,6 +6,7 @@ import {
 	useRouter,
 } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { redirectIfAuth } from "@/utils/redirect-if-auth";
 
 const RouteComponent = () => {
 	const { history } = useRouter();
@@ -18,7 +19,7 @@ const RouteComponent = () => {
 						<div className="flex items-center justify-center rounded-md text-primary-foreground">
 							<img src="/logo.svg" alt="Logo" className="h-8 w-8" />
 						</div>
-						Fync
+						Fyn
 					</Link>
 				</div>
 				<div className="flex flex-1 items-center justify-center">
@@ -41,5 +42,8 @@ const RouteComponent = () => {
 };
 
 export const Route = createFileRoute("/_auth")({
+	beforeLoad({ context, search }) {
+		redirectIfAuth(context.session, search);
+	},
 	component: RouteComponent,
 });
