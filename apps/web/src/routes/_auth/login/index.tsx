@@ -1,7 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { z } from "zod";
 import { LoginForm, SocialBtn } from "./_components";
 
 export const Route = createFileRoute("/_auth/login/")({
+	validateSearch: z.object({
+		redirect: z.coerce.string().optional(),
+	}),
+	beforeLoad({ context, search }) {
+		if (context.session?.user.id) {
+			throw redirect({
+				href: search.redirect || "/",
+				replace: true,
+			});
+		}
+	},
 	component: RouteComponent,
 });
 

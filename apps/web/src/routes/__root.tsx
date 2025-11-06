@@ -9,13 +9,17 @@ import {
 	Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 import { Toaster } from "@/components/ui/sonner";
+import { getSession } from "@/funcs/get-session";
 import appCss from "@/styles/index.css?url";
 import type { orpc } from "@/utils/orpc";
+
 export interface RouterAppContext {
-	orpc: typeof orpc;
-	queryClient: QueryClient;
-}
+		orpc: typeof orpc;
+		queryClient: QueryClient;
+		session?: Awaited<ReturnType<typeof getSession>>;
+	}
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
 	head: () => ({
@@ -47,7 +51,13 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 			},
 		],
 	}),
+	async beforeLoad() {
+		const session = await getSession();
 
+		return {
+			session,
+		};
+	},
 	component: RootDocument,
 });
 
@@ -58,11 +68,13 @@ function RootDocument() {
 				<HeadContent />
 			</head>
 			<body>
-				<Outlet />
-				<Toaster />
-				<TanStackRouterDevtools position="bottom-left" />
-				<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
-				<Scripts />
+				<NuqsAdapter>
+					<Outlet />
+					<Toaster position="top-center" />
+					<TanStackRouterDevtools position="bottom-left" />
+					<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+					<Scripts />
+				</NuqsAdapter>
 			</body>
 		</html>
 	);

@@ -3,6 +3,8 @@
 import { LoginSchema } from "@fyn/schemas/login";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
 	Field,
@@ -15,13 +17,31 @@ import { authClient } from "@/lib/auth-client";
 import { getDefaultPropsForField, getFieldIsInValid } from "@/utils/form";
 
 export function LoginForm() {
+	const { redirect } = useSearch({
+		from: "/_auth/login/",
+	});
+	const navigate = useNavigate();
+
 	const { mutateAsync: sendMagicLink } = useMutation({
 		mutationFn: async (data: { email: string }) => {
 			return authClient.signIn.magicLink({
 				email: data.email,
-				callbackURL: `${window.location.origin}/app`,
+				callbackURL: redirect || `${window.location.origin}/app`,
 				errorCallbackURL: `${window.location.origin}/login`,
 			});
+		},
+		onSuccess: (_, { email }) => {
+			toast.success("Magic link sent! Please check your email.");
+
+			navigate({
+				to: "/check-email",
+				search: {
+					email,
+				},
+			});
+		},
+		onError: () => {
+			toast.error("Failed to send magic link. Please try again.");
 		},
 	});
 
@@ -30,7 +50,7 @@ export function LoginForm() {
 			email: "",
 		},
 		validators: {
-			onBlur: LoginSchema
+			onBlur: LoginSchema,
 		},
 		async onSubmit({ value }) {
 			await sendMagicLink({ email: value.email });
@@ -66,6 +86,7 @@ export function LoginForm() {
 				type="submit"
 				className="w-full"
 				disabled={form.state.isSubmitting}
+				isLoading={form.state.isSubmitting}
 			>
 				Login
 			</Button>

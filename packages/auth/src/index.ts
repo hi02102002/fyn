@@ -13,10 +13,19 @@ const _auth = betterAuth({
 		schema: schema,
 	}),
 	trustedOrigins: [process.env.CORS_ORIGIN || ""],
+	socialProviders: {
+		google: {
+			clientId: process.env.GOOGLE_CLIENT_ID || "",
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+		},
+		github: {
+			clientId: process.env.GITHUB_CLIENT_ID || "",
+			clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+		},
+	},
 	emailAndPassword: {
 		enabled: true,
 	},
-
 	advanced: {
 		defaultCookieAttributes: {
 			sameSite: "none",
@@ -35,6 +44,14 @@ const _auth = betterAuth({
 			},
 		}),
 	],
+	account: {
+		encryptOAuthTokens: true,
+		accountLinking: {
+			trustedProviders: ["google", "github", "email-password"],
+			enabled: true,
+			allowDifferentEmails: false,
+		},
+	},
 });
 
 const handler = _auth.handler;
