@@ -34,6 +34,9 @@ COPY --from=prune --chown=server-user:server-group /app/out/json/ ./
 COPY --from=installer-production --chown=server-user:server-group /app/node_modules ./node_modules
 COPY --from=installer-production --chown=server-user:server-group /app/apps/server/node_modules ./apps/server/node_modules
 COPY --from=builder --chown=server-user:server-group /app/apps/server/dist ./apps/server/dist
+COPY --from=builder --chown=server-user:server-group /app/packages/ /app/packages/
+RUN rm -rf /app/packages/**/src
+
 
 WORKDIR /app/apps/server
 

@@ -25,7 +25,7 @@ export const queryClient = new QueryClient({
 
 const getORPCClient = createIsomorphicFn()
 	.server((): RouterClient<AppRouter> => {
-		getRequest();
+		getRequest?.();
 		const link = new RPCLink({
 			url: `${import.meta.env.VITE_SERVER_URL}/rpc`,
 			fetch(url, options) {

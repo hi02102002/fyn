@@ -7,17 +7,18 @@ import {
 	HeadContent,
 	Outlet,
 	Scripts,
-	useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import Loader from "@/components/loader";
+import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 import { Toaster } from "@/components/ui/sonner";
+import { getSession } from "@/funcs/get-session";
+import appCss from "@/styles/index.css?url";
 import type { orpc } from "@/utils/orpc";
-import Header from "../components/header";
-import appCss from "../index.css?url";
+
 export interface RouterAppContext {
 	orpc: typeof orpc;
 	queryClient: QueryClient;
+	session?: Awaited<ReturnType<typeof getSession>>;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -31,7 +32,12 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "My App",
+				title: "Fyn - Chatbot flows made easy",
+			},
+			{
+				name: "description",
+				content:
+					"Fyn is a powerful platform that enables you to create, manage, and deploy chatbot flows with ease.",
 			},
 		],
 		links: [
@@ -39,28 +45,36 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 				rel: "stylesheet",
 				href: appCss,
 			},
+			{
+				rel: "icon",
+				href: "/logo.svg",
+			},
 		],
 	}),
+	async beforeLoad() {
+		const session = await getSession();
 
+		return {
+			session,
+		};
+	},
 	component: RootDocument,
 });
 
 function RootDocument() {
-	const isFetching = useRouterState({ select: (s) => s.isLoading });
 	return (
-		<html lang="en" className="dark">
+		<html lang="en" className="light">
 			<head>
 				<HeadContent />
 			</head>
 			<body>
-				<div className="grid h-svh grid-rows-[auto_1fr]">
-					<Header />
-					{isFetching ? <Loader /> : <Outlet />}
-				</div>
-				<Toaster richColors />
-				<TanStackRouterDevtools position="bottom-left" />
-				<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
-				<Scripts />
+				<NuqsAdapter>
+					<Outlet />
+					<Toaster position="top-center" />
+					<TanStackRouterDevtools position="bottom-left" />
+					<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+					<Scripts />
+				</NuqsAdapter>
 			</body>
 		</html>
 	);
