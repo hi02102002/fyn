@@ -11,8 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthRouteImport } from './routes/_auth'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as CheckEmailIndexRouteImport } from './routes/check-email/index'
+import { Route as landingpageIndexRouteRouteImport } from './routes/(landingpage)/index/route'
 import { Route as ProtectedAppIndexRouteImport } from './routes/_protected.app/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
 
@@ -24,14 +24,14 @@ const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CheckEmailIndexRoute = CheckEmailIndexRouteImport.update({
   id: '/check-email/',
   path: '/check-email/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const landingpageIndexRouteRoute = landingpageIndexRouteRouteImport.update({
+  id: '/(landingpage)/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProtectedAppIndexRoute = ProtectedAppIndexRouteImport.update({
@@ -46,22 +46,22 @@ const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof landingpageIndexRouteRoute
   '/check-email': typeof CheckEmailIndexRoute
   '/login': typeof AuthLoginIndexRoute
   '/app': typeof ProtectedAppIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof landingpageIndexRouteRoute
   '/check-email': typeof CheckEmailIndexRoute
   '/login': typeof AuthLoginIndexRoute
   '/app': typeof ProtectedAppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
   '/_protected': typeof ProtectedRouteWithChildren
+  '/(landingpage)/': typeof landingpageIndexRouteRoute
   '/check-email/': typeof CheckEmailIndexRoute
   '/_auth/login/': typeof AuthLoginIndexRoute
   '/_protected/app/': typeof ProtectedAppIndexRoute
@@ -73,18 +73,18 @@ export interface FileRouteTypes {
   to: '/' | '/check-email' | '/login' | '/app'
   id:
     | '__root__'
-    | '/'
     | '/_auth'
     | '/_protected'
+    | '/(landingpage)/'
     | '/check-email/'
     | '/_auth/login/'
     | '/_protected/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
   ProtectedRoute: typeof ProtectedRouteWithChildren
+  landingpageIndexRouteRoute: typeof landingpageIndexRouteRoute
   CheckEmailIndexRoute: typeof CheckEmailIndexRoute
 }
 
@@ -104,18 +104,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/check-email/': {
       id: '/check-email/'
       path: '/check-email'
       fullPath: '/check-email'
       preLoaderRoute: typeof CheckEmailIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(landingpage)/': {
+      id: '/(landingpage)/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof landingpageIndexRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_protected/app/': {
@@ -158,9 +158,9 @@ const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
   ProtectedRoute: ProtectedRouteWithChildren,
+  landingpageIndexRouteRoute: landingpageIndexRouteRoute,
   CheckEmailIndexRoute: CheckEmailIndexRoute,
 }
 export const routeTree = rootRouteImport

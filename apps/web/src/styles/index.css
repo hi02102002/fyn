@@ -124,6 +124,10 @@ body {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@theme {
+  --container-8xl: 1440px;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
