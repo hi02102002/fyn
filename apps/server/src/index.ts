@@ -1,21 +1,16 @@
 import "dotenv/config";
-import { createContext } from "@fyn/api/context";
-import { appRouter } from "@fyn/api/routers/index";
+import type { Server as HTTPServer } from "node:http";
 import { handler } from "@fyn/auth";
-import { OpenAPIHandler } from "@orpc/openapi/fetch";
-import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
-import { onError } from "@orpc/server";
-import { RPCHandler } from "@orpc/server/fetch";
-import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
+import { initSocketInstance } from "@fyn/socket";
+import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { orpcMiddleware } from "./middlewares/orpc";
+import { socketMiddleware } from "./middlewares/socket";
+import type { AppVariables } from "./types/vars";
 
-const app = new Hono<{
-	Variables: {
-		io?: TIo;
-	};
-}>();
+const app = new Hono<AppVariables>();
 
 app.use(logger());
 app.use(
@@ -30,59 +25,13 @@ app.use(
 
 app.on(["POST", "GET"], "/api/auth/*", (c) => handler(c.req.raw));
 
-export const apiHandler = new OpenAPIHandler(appRouter, {
-	plugins: [
-		new OpenAPIReferencePlugin({
-			schemaConverters: [new ZodToJsonSchemaConverter()],
-		}),
-	],
-	interceptors: [
-		onError((error) => {
-			console.error(error);
-		}),
-	],
-});
-
-export const rpcHandler = new RPCHandler(appRouter, {
-	interceptors: [
-		onError((error) => {
-			console.error(error);
-		}),
-	],
-});
-
-app.use("/*", async (c, next) => {
-	const context = await createContext({ context: c });
-
-	const rpcResult = await rpcHandler.handle(c.req.raw, {
-		prefix: "/rpc",
-		context: context,
-	});
-
-	if (rpcResult.matched) {
-		return c.newResponse(rpcResult.response.body, rpcResult.response);
-	}
-
-	const apiResult = await apiHandler.handle(c.req.raw, {
-		prefix: "/api-reference",
-		context: context,
-	});
-
-	if (apiResult.matched) {
-		return c.newResponse(apiResult.response.body, apiResult.response);
-	}
-
-	await next();
-});
+app.use("/*", orpcMiddleware);
 
 app.get("/", (c) => {
 	return c.text("OK");
 });
 
-import type { TIo } from "@fyn/socket";
-import { serve } from "@hono/node-server";
-
-serve(
+const httpServer = serve(
 	{
 		fetch: app.fetch,
 		port: 3000,
@@ -91,3 +40,7 @@ serve(
 		console.log(`Server is running on http://localhost:${info.port}`);
 	},
 );
+
+const io = initSocketInstance(httpServer as HTTPServer);
+
+app.use("/*", socketMiddleware(io));

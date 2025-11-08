@@ -1,5 +1,7 @@
 import type { TIo } from "@fyn/socket";
 
-export type TVars = {
-	io?: TIo;
-};
+export interface AppVariables {
+	Variables: {
+		io?: TIo;
+	};
+}
